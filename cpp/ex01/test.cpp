@@ -14,15 +14,11 @@ int main ()
         if (command == "ADD")
         {
             a.getFillContact(); 
-            // a.printer()
             a.set_index_increment();
             
         }else if (command == "SEARCH")
         {
-            // while ()
-            // {
                 a.printer();
-            // }
         }
         else if (command == "EXIT")
         {
