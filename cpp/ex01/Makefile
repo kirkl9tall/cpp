@@ -1,4 +1,4 @@
-Name = test
+Name = Phonebook
 CXX = c++ -Wextra -Werror -Wall
 
 SRCS = test.cpp

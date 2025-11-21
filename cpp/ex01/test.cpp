@@ -1,6 +1,6 @@
 #include "phonebook.hpp"
 #include <string>
-
+#include <iostream>
 int main ()
 {
 
@@ -9,8 +9,11 @@ int main ()
     {
         std::string command;
         std::cout << "enter : ADD or SEARCH or EXIT" << std::endl;
-        std::getline(std::cin,command);
-
+        if (!std::getline(std::cin, command))
+        {
+            std::cout << "EOF detected, exiting..." << std::endl;
+            break;
+        }
         if (command == "ADD")
         {
             a.getFillContact(); 
@@ -25,6 +28,18 @@ int main ()
             std::cout << "GOOD BYE ! " << std::endl;
             break;
         }
+
     }
         // a.getFillContact();
 }
+
+
+// #include <chrono>
+// #include <thread>
+
+// int main ()
+// {
+//     std::cout << "hello world" << "\n";
+//     std::this_thread::sleep_for(std::chrono::seconds(5));
+//     std::cout << "how are  you";
+// }

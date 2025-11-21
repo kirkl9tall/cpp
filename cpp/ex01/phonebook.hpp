@@ -1,94 +1,137 @@
 #ifndef PHONEBOOK_HPP
 #define PHONEBOOK_HPP
-
 #include <iostream>
 #include <iomanip>
 #include <cstring>
 #include "contact.hpp"
-class PhoneBook{
+#include <cstdlib>
+class PhoneBook
+{
     Contact contact[8];
     int index;
-    public:
+public:
     PhoneBook()
     {
         index = 0;
     }
+    int checker(std::string buffer)
+    {
+        int i = 0;
+
+        while (buffer[i])
+        {
+            if (!((buffer[i] >= 65 && buffer[i] <= 90) || (buffer[i] >= 97 && buffer[i] <= 122)))
+                return 0;
+            i++;
+        }
+        return 1;
+    }
     void getFillContact()
     {
         std::string buffer;
-        std::cout << "First Name :"<< std::endl;
-        getline(std::cin,buffer);
-        contact[index % 8].set_FirstName(buffer);
-        std::cout << "Last name :"<< std::endl;
-        getline(std::cin,buffer);
-        contact[index % 8].setLastname(buffer);
-        std::cout << "nickName :"<< std::endl;
-        getline(std::cin,buffer);
-        contact[index % 8].setNickname(buffer);
-        std::cout << "PhoneNumber :"<< std::endl;
-        getline(std::cin,buffer);
-        contact[index % 8].setPhonenumber(buffer);
-        std::cout << "darkerst secret :"<< std::endl;
-        getline(std::cin,buffer);
+        std::cout << "First Name :" << std::endl;
+        if (!getline(std::cin, buffer))
+        {
+            std::cout << "EOF detected, exiting..." << std::endl;
+            exit(1);
+        }
+        if (checker(buffer))
+            contact[index % 8].set_FirstName(buffer);
+        std::cout << "Last name :" << std::endl;
+        if (!getline(std::cin, buffer))
+        {
+            std::cout << "EOF detected, exiting..." << std::endl;
+            exit(1);
+        }
+        if (checker(buffer))
+            contact[index % 8].setLastname(buffer);
+        std::cout << "nickName :" << std::endl;
+        if (!getline(std::cin, buffer))
+        {
+            std::cout << "EOF detected, exiting..." << std::endl;
+            exit(1);
+        }
+        if (checker(buffer))
+            contact[index % 8].setNickname(buffer);
+        std::string number;
+        while (true)
+        {
+            std::cout << "PhoneNumber :" << std::endl;
+            if (!getline(std::cin, number))
+            {
+                std::cout << "EOF detected, exiting..." << std::endl;
+                exit(1);
+            }
+
+            contact[index % 8].setPhonenumber(number);
+            break;
+        }
+        std::cout << "darkerst secret :" << std::endl;
+        if (!getline(std::cin, buffer))
+        {
+            std::cout << "EOF detected, exiting..." << std::endl;
+            exit(1);
+        }
         contact[index % 8].setDarkest_secret(buffer);
-    };
+    }
     void head()
     {
-            std::cout << "|" << std::setw(10) << "Index"
-              << "|" << std::setw(10) << "FirstName"
-              << "|" << std::setw(10) << "LastName"
-              << "|" << std::setw(10) << "NickName"
-              << "|" << std::endl;
-    }    void head_two()
-    {
-            std::cout << "|" << std::setw(10) << "Index"
-              << "|" << std::setw(10) << "FirstName"
-              << "|" << std::setw(10) << "LastName"
-              << "|" << std::setw(10) << "NickName"
-              << "|" << std::setw(10) << "PhoneNumber"
-              << "|" << std::setw(10) << "D_secret" << std::endl;
+        std::cout << "|" << std::setw(10) << "Index"
+                  << "|" << std::setw(10) << "FirstName"
+                  << "|" << std::setw(10) << "LastName"
+                  << "|" << std::setw(10) << "NickName"
+                  << "|" << std::endl;
     }
     void printer()
-    {   
+    {
         int t = 0;
         int pick;
         head();
-        while (t  < (index>8 ? 8: index))
+        while (t < (index > 8 ? 8 : index))
         {
-            std::cout <<"|" << std::setw(10) << t << "|" <<  std::setw(10) << formatedFeild(contact[t].getFirstName()) << "|"
-            << std::setw(10) << formatedFeild(contact[t].getLastname() ) << "|" << std::setw(10) 
-            << formatedFeild(contact[t].getNickname() ) << "|" << std::endl;      
+            std::cout << "|" << std::setw(10) << t << "|" << std::setw(10) << formatedFeild(contact[t].getFirstName()) << "|"
+                      << std::setw(10) << formatedFeild(contact[t].getLastname()) << "|" << std::setw(10)
+                      << formatedFeild(contact[t].getNickname()) << "|" << std::endl;
             t++;
         }
         std::cout << "PICK INDEX : ";
         std::cin >> pick;
-        if (pick < 8 && index > pick)
+        std::cin.ignore();
+        if (std::cin.fail())
         {
-            head_two();
-            std::cout << "|" << std::setw(10) << pick << "|" << std::setw(10) << formatedFeild(contact[pick].getFirstName()) << "|"
-            << std::setw(10) << formatedFeild(contact[pick].getLastname() ) << "|" << std::setw(10) 
-            << formatedFeild(contact[pick].getNickname() ) << "|"  << std::setw(10) 
-            << formatedFeild(contact[pick].getPhonenumber() ) << "|" << std::setw(10) 
-            << formatedFeild(contact[pick].getDarkest_secret() ) << "|" << std::endl;
+            std::cin.clear();
+            std::cin.ignore(10000, '\n');
         }
-        else 
+        else if (pick < 8 && index > pick)
+        {
+            std::cout << "index : " << pick << "\n"
+                      << "First Name : " << formatedFeild(contact[pick].getFirstName()) << ".\n"
+                      << "Last Name : " << formatedFeild(contact[pick].getLastname()) << ".\n"
+                      << "Nickname : "
+                      << formatedFeild(contact[pick].getNickname()) << ".\n"
+                      << "Phone Number : "
+                      << formatedFeild(contact[pick].getPhonenumber()) << ".\n"
+                      << "Darkest_secret : "
+                      << formatedFeild(contact[pick].getDarkest_secret()) << std::endl;
+        }
+        else
         {
             std::cout << "Index ERROR" << std::endl;
         }
-    };
+    }
     std::string formatedFeild(std::string s)
     {
         if (s.length() > 10)
-            return s.substr(0,9) + "." ;
+            return s.substr(0, 9) + ".";
         return s;
-    };
+    }
     void set_index_increment()
     {
         index++;
-    };
+    }
     int get_index()
     {
-        return(index);
-    };
+        return (index);
+    }
 };
 #endif
