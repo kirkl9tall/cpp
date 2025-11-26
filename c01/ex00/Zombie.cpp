@@ -14,18 +14,6 @@ void Zombie::announce()
     std::cout<< name << " : BraiiiiiiinnnzzzZ..."<<std::endl;
 }
 
-Zombie* newZombie(std::string str)
-{
-    Zombie *a;
-    a = new Zombie(str);
-    a->announce();
-    return (a);
-}
-void randomChump( std::string name){
-    Zombie s(name);
-    s.announce();
-
-}
 
 int main ()
 {
@@ -37,4 +25,6 @@ int main ()
             exit(1);
         Zombie * b =  newZombie(buffer);
         delete b;
+        while (true)
+            ;
 }
