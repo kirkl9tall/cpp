@@ -6,11 +6,11 @@
 #    By: abismail <abismail@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/11/22 15:03:01 by abismail          #+#    #+#              #
-#    Updated: 2025/11/22 15:03:02 by abismail         ###   ########.fr        #
+#    Updated: 2025/11/23 14:19:39 by abismail         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-Name = megaphone
+Name = Megaphone
 CXX = c++ -Wextra -Werror -Wall
 
 SRCS = Megaphone.cpp

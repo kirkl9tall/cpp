@@ -6,12 +6,12 @@ HumanB::HumanB(std::string a)
 }
 void HumanB::attack()
 {
-    std::cout << name << b->getType() << std::endl;
+    std::cout << name << " : " << b->getType() << std::endl;
     
 }
-void HumanB::setWeapon(Weapon weapon)
+void HumanB::setWeapon(Weapon &weapon)
 {
-    b = &weapon;
+    this->b = &weapon;
 }
 void HumanB::setType(std::string type)
 {

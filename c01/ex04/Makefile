@@ -1,4 +1,4 @@
-NAME = Unnecessary_violence
+NAME = replace
 SRCS = main.cpp Weapon.cpp HumanA.cpp HumanB.cpp 
 OBJS = $(SRCS:.cpp=.o)
 CXX = c++ -Wall -Werror -Wextra -std=c++98
