@@ -19,7 +19,6 @@ PhoneBook::PhoneBook(){
 int PhoneBook::checker(std::string buffer)
 {
         int i = 0;
-
         while (buffer[i])
         {
             if (!((buffer[i] >= 65 && buffer[i] <= 90) || (buffer[i] >= 97 && buffer[i] <= 122)))
