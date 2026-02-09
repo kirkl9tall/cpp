@@ -283,115 +283,143 @@
 
 
 
-class A{
-private:
-    const std::string Name;
-    int Age;
-    int level;
-public:
-    A(const std::string name,int age);
-    A& operator=(A& other);
-    const std::string getName()const;
-    const int getAge()const;
-    const int getLevel()const;
-    void levelup();
-    void arena();
-    void pvp();
-    ~A();
-// nested classes  
-    class ex1:public std::exception{
-        const char* what() const throw()
-        {
-            return("you need level 10 for arena battle");
-        }
-    };
-    class ex2:public std::exception{
+// class A{
+// private:
+//     const std::string Name;
+//     int Age;
+//     int level;
+// public:
+//     A(const std::string name,int age);
+//     A& operator=(A& other);
+//     const std::string getName()const;
+//     const int getAge()const;
+//     const int getLevel()const;
+//     void levelup();
+//     void arena();
+//     void pvp();
+//     ~A();
+// // nested classes  
+//     class ex1:public std::exception{
+//         const char* what() const throw()
+//         {
+//             return("you need level 10 for arena battle");
+//         }
+//     };
+//     class ex2:public std::exception{
 
-        const char* what() const throw()
-        {
-            return "you need level 15 for pvp";
-        }
-    };
+//         const char* what() const throw()
+//         {
+//             return "you need level 15 for pvp";
+//         }
+//     };
 
-};
-void A::arena()
-{
-    if (level < 10)
-        throw (A::ex1());
-    std::cout << "waiting for partner  ... !"<<std::endl;
-}
-void A::pvp()
-{
-    if (level < 15)
-        throw (A::ex2());
-    std::cout << "waiting for opponent ... !"<<std::endl;
-}
-void A::levelup()
-{
-    level++;
-}
-A::A(const std::string name,int age):Name(name),Age(age){
-    level = 1;
-}
+// };
+// void A::arena()
+// {
+//     if (level < 10)
+//         throw (A::ex1());
+//     std::cout << "waiting for partner  ... !"<<std::endl;
+// }
+// void A::pvp()
+// {
+//     if (level < 15)
+//         throw (A::ex2());
+//     std::cout << "waiting for opponent ... !"<<std::endl;
+// }
+// void A::levelup()
+// {
+//     level++;
+// }
+// A::A(const std::string name,int age):Name(name),Age(age){
+//     level = 1;
+// }
 
-A& A::operator=(A& other){
-    // we will not  assign the name cause it is  const
-    level = other.level;
-    return *this;
-}
-A::~A(){
-    std::cout << Name <<" : has been disconected !"<<std::endl;
-}
+// A& A::operator=(A& other){
+//     // we will not  assign the name cause it is  const
+//     level = other.level;
+//     return *this;
+// }
+// A::~A(){
+//     std::cout << Name <<" : has been disconected !"<<std::endl;
+// }
 
-const std::string A::getName()const 
-{
-    return (Name);
-}
-const int A::getAge()const {
-    return (Age);
-}
-const int A::getLevel()const
-{
-    return level;
-}
+// const std::string A::getName()const 
+// {
+//     return (Name);
+// }
+// const int A::getAge()const {
+//     return (Age);
+// }
+// const int A::getLevel()const
+// {
+//     return level;
+// }
 
-std::ostream& operator<<(std::ostream& out , const A& player){
+// std::ostream& operator<<(std::ostream& out , const A& player){
 
-    out<< "the player : "<< player.getName() << " Level : " << player.getLevel() << " age : "  << player.getAge();
-    return out;
-}
+//     out<< "the player : "<< player.getName() << " Level : " << player.getLevel() << " age : "  << player.getAge();
+//     return out;
+// }
+
+// int main  ()
+// {
+//     A a("abdelilah",30);
+
+//     std::cout<< a << std::endl;
+//     int i = 0;
+//     while (i < 13)
+//     {
+//         a.levelup();
+//         i++;
+//     }
+
+//     try
+//     {
+//         a.arena();
+//     }
+//     catch(std::exception &a)
+//     {
+//         std::cout << "Exception : " << a.what() << std::endl;
+//     }
+//     A b("bouchra",33);
+//     b = a ;
+
+//     std::cout<< b << std::endl;
+
+//     try
+//     {
+//         b.arena();
+//     }
+//     catch (std::exception &a)
+//     {
+//         std::cout << "Exception : " << a.what() << std::endl;
+//     }
+// }
+
+
+
+// class A{
+// public:
+//     std::string name;
+//     std::string age;
+// };
+// class B:public A{
+// };
+
+
 
 int main  ()
 {
-    A a("abdelilah",30);
+    // A blo;
+    
+    // B* pli;
 
-    std::cout<< a << std::endl;
-    int i = 0;
-    while (i < 13)
-    {
-        a.levelup();
-        i++;
-    }
+    // pli = static_cast<B*>(&blo);
 
-    try
-    {
-        a.arena();
-    }
-    catch(std::exception &a)
-    {
-        std::cout << "Exception : " << a.what() << std::endl;
-    }
-    A b("bouchra",33);
-    b = a ;
+    // pli->name = "sorrow";
 
-    std::cout<< b << std::endl;
-
-    try
-    {
-        b.arena();
-    }
-    catch (std::exception &a)
-    {
-        std::cout << "Exception : " << a.what() << std::endl;
-    }
+    // std::cout <<blo.name<<std::endl;
+    float x = 42;
+    std::cout << x <<std::endl;
+    
 }
