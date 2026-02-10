@@ -1,4 +1,6 @@
 #include <iostream>
+#include <cstdint>
+
 // class Animal{
 //     int  val;
 //     public:
@@ -408,18 +410,51 @@
 
 
 
+// int main  ()
+// {
+//     // A blo;
+    
+//     // B* pli;
+
+//     // pli = static_cast<B*>(&blo);
+
+//     // pli->name = "sorrow";
+
+//     // std::cout <<blo.name<<std::endl;
+//     float x = 42;
+//     std::cout << x <<std::endl;
+    
+// }
+
+
+
+struct Data{
+    int value;
+};
+
+
 int main  ()
 {
-    // A blo;
-    
-    // B* pli;
+    // Data data;
+    // data.value = 15;
+    // Data *ptr= &data;
+    // printf ("adress : %p\n",ptr);
 
-    // pli = static_cast<B*>(&blo);
+    // uintptr_t raw = reinterpret_cast<uintptr_t>(ptr);
 
-    // pli->name = "sorrow";
+    // printf ("content : %p\n",raw);
 
-    // std::cout <<blo.name<<std::endl;
-    float x = 42;
-    std::cout << x <<std::endl;
-    
+    int x = 42;
+
+    std::cout << &x << std::endl;
+    char* a = reinterpret_cast<char*>(&x);
+    int* b = reinterpret_cast<int*>(&x);
+
+  
+
+    std::cout << *a << std::endl;
+    std::cout << *b << std::endl;
+    std::cout << x << std::endl;
+
+
 }

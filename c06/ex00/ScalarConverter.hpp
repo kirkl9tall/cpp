@@ -19,8 +19,8 @@ class ScalarConverter{
 public:
     static void convert(std::string const& rep);
 private:
-    // const
-    //copy const
-    // deep cop
-    //destructor
+    ScalarConverter();
+    ScalarConverter(ScalarConverter& other);
+    ScalarConverter&operator=(ScalarConverter& other);
+    ~ScalarConverter();
 };

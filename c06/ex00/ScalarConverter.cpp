@@ -1,75 +1,5 @@
 #include "ScalarConverter.hpp"
 
-// int special_c(std::string const& rep)
-// {
-//     if (rep == "+inf" ||rep == "+inff"||rep == "nan"||rep == "nanf")
-//         return 1;
-//     return 0;
-// }
-
-// void char_p(std::string const& rep)
-// {
-//     char *chyata;
-//     double  x;
-//     if (special_c(rep)){
-//         std::cout << "char : impossible"<<std::endl;
-//         return;
-//     }
-//     x = strtod(rep.c_str(),&chyata);
-//     if  (!chyata[0])
-//     {
-//         if (x >= 32 && x < 127)
-//             std::cout << "char : '"<<static_cast<char>(x) <<"'"<< std::endl;
-//         else
-//             std::cout <<"char : Non displayable" << std::endl;
-//     }
-//     else if (!x && ((chyata[0] >= 32 && chyata[0] < 127) && !chyata[1]) ){
-//             std::cout << "char : '"<< chyata[0] << "'"<<std::endl;
-//     }
-//     else 
-//         std::cout <<"char : impossible" << std::endl;
-// }
-
-// void float_p(std::string const& rep)
-// {
-//     char *chyata;
-//     double  x;
-        
-//     if (special_c(rep)){
-//         x = strtod(rep.c_str(),&chyata); 
-//         std::cout << static_cast<float>(x)<<"f"<<std::endl;
-//         return;
-//     }
-//     x = strtod(rep.c_str(),&chyata); 
-
-//     if ((x == 0 && chyata == rep.c_str()) || !((chyata[0] == 'f' && chyata[1] == '\0')))
-//         std::cout <<"failure printing float" << std::endl;
-//     else   
-//         std::cout <<"float : "<< static_cast<float>(x) << chyata <<std::endl;
-// }
-
-// void int_p(std::string const& rep){
-
-//     char *chyata;
-//     double  x;
-//     if (special_c(rep)){
-//         std::cout << "int : impossible"<<std::endl;
-//         return;
-//     }
-//     x = strtod(rep.c_str(),&chyata);
-
-//     if (!chyata[0])
-//     {
-//         if (x > INT_MAX || x < INT_MIN)
-//             std::cout << "impossible ! "<<std::endl;
-//         else 
-//             std::cout << static_cast<int>(x)<<std::endl;
-//     }
-//     else
-//             std::cout << "impossible ! "<<std::endl;
-// }
-
-
 bool isPrintable(char c) {
     return (c >= 32 && c <= 126);
 }
@@ -170,9 +100,30 @@ LiteralType type = detectType(rep);
     else 
         std::cout << "int : " << static_cast<int>(x) << "\n";
     // float 
-    if (type == TYPE_FLOAT ||type == TYPE_CHAR||type == TYPE_INT||type == TYPE_DOUBLE)
+    if (type == TYPE_CHAR)
+        std::cout << "float : "<< std::fixed <<std::setprecision(1)<<static_cast<float>(rep[0])<< "f"<<std::endl;
+    else if (type == TYPE_SPECIAL_FLOAT || type == TYPE_SPECIAL_DOUBLE)
+        std::cout << "float: "<< std::fixed <<std::setprecision(1) <<  static_cast<float>(x)<<"f"<<std::endl;
+    else if (type == TYPE_FLOAT ||type == TYPE_INT||type == TYPE_DOUBLE)
         std::cout << "float: "<< std::fixed <<std::setprecision(1) <<  static_cast<float>(x)<< "f"<<std::endl;
-    else 
-    std::cout << "double : impossible"<<std::endl;
-    
+    //double 
+    if (type == TYPE_CHAR)
+        std::cout << "double : "<< std::fixed <<std::setprecision(1)<<static_cast<double>(rep[0])<<std::endl;
+    else if (type == TYPE_SPECIAL_FLOAT || type == TYPE_SPECIAL_DOUBLE)
+        std::cout << "double : "<< std::fixed <<std::setprecision(1) <<(x)<<std::endl;
+    else if (type == TYPE_FLOAT ||type == TYPE_INT||type == TYPE_DOUBLE)
+        std::cout << "double : "<< std::fixed <<std::setprecision(1) <<(x)<<std::endl;
 } 
+
+    ScalarConverter::ScalarConverter(){
+
+    }
+    ScalarConverter::ScalarConverter(ScalarConverter& other){
+
+    }
+    ScalarConverter& ScalarConverter::operator=(ScalarConverter& other){
+
+    }
+    ScalarConverter::~ScalarConverter(){
+        
+    }
