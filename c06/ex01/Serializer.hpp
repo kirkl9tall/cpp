@@ -3,7 +3,7 @@
 #include  <string>
 #include <climits>
 #include <iomanip>
-#include <cstdint>
+#include <stdint.h>
 #include "Data.hpp"
 
 class Serializer{

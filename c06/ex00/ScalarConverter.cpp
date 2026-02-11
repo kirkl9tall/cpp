@@ -119,10 +119,11 @@ LiteralType type = detectType(rep);
 
     }
     ScalarConverter::ScalarConverter(ScalarConverter& other){
-
+        (void)other;
     }
     ScalarConverter& ScalarConverter::operator=(ScalarConverter& other){
-
+        (void)other;
+        return *this;
     }
     ScalarConverter::~ScalarConverter(){
         

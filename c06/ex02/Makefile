@@ -1,7 +1,7 @@
-NAME = serializer
-SRCS = Serializer.cpp main.cpp
+NAME = ll
+SRCS = Base.cpp main.cpp
 OBJS=$(SRCS:.cpp=.o) 
-CXX = c++ -Wall -Werror -Wextra  -std=c++98
+CXX = c++ #-Wall -Werror -Wextra  -std=c++98
 RM = rm -rf 
 
 all:$(NAME)
