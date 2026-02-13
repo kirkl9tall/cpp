@@ -426,35 +426,71 @@
     
 // }
 
+// struct Data{
+//     int value;
+// };
 
 
-struct Data{
-    int value;
-};
+// int main  ()
+// {
+//     // Data data;
+//     // data.value = 15;
+//     // Data *ptr= &data;
+//     // printf ("adress : %p\n",ptr);
 
+//     // uintptr_t raw = reinterpret_cast<uintptr_t>(ptr);
 
-int main  ()
-{
-    // Data data;
-    // data.value = 15;
-    // Data *ptr= &data;
-    // printf ("adress : %p\n",ptr);
+//     // printf ("content : %p\n",raw);
 
-    // uintptr_t raw = reinterpret_cast<uintptr_t>(ptr);
+//     int x = 42;
 
-    // printf ("content : %p\n",raw);
-
-    int x = 42;
-
-    std::cout << &x << std::endl;
-    char* a = reinterpret_cast<char*>(&x);
-    int* b = reinterpret_cast<int*>(&x);
+//     std::cout << &x << std::endl;
+//     char* a = reinterpret_cast<char*>(&x);
+//     int* b = reinterpret_cast<int*>(&x);
 
   
 
-    std::cout << *a << std::endl;
-    std::cout << *b << std::endl;
-    std::cout << x << std::endl;
+//     std::cout << *a << std::endl;
+//     std::cout << *b << std::endl;
+//     std::cout << x << std::endl;
 
 
+// }
+
+
+
+class Base{
+    public:
+    std::string name = "10 sba7 pronto";
+    virtual void pri(){
+        std::cout <<"base class" <<std::endl;
+    }
+};
+
+class deriva:public Base{
+    public:
+    void pri(){
+        std::cout <<"der class A" <<std::endl;
+    }
+};
+class derivb:public Base{
+    public:
+    void pri(){
+        std::cout <<"der class B" <<std::endl;
+    }
+};
+
+
+int main  () 
+{
+    Base* a = new deriva;
+
+    // deriva* c = static_cast<deriva*>(a);
+    derivb* b = static_cast<derivb*>(a);
+    // derivb* b = dynamic_cast<derivb*>(a);
+    if (b)
+        b->pri();
+    else
+        std::cout << "Cast failed" << std::endl;
 }
+

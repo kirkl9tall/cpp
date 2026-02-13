@@ -45,27 +45,21 @@ void identify(Base& p){
         A &a = dynamic_cast<A&>(p);
         std::cout << "A" << std::endl;
     }
-    catch(std::bad_cast &e)
-    {
-    }
-
+    catch(std::bad_cast &e){}
     //b
-     try{
+    try{
         B &b = dynamic_cast<B&>(p);
         std::cout << "B" << std::endl;
     }
-    catch(std::bad_cast &e)
-    {
-    }
+    catch(std::bad_cast &e){}
     //c
-      try{
+    try{
         C &c = dynamic_cast<C&>(p);
         std::cout << "C" << std::endl;
     }
-    catch(std::bad_cast &e)
-    {
-    }
+    catch(std::bad_cast &e){}
 }
+
 int main(){
     Base *p = generate(); //
     identify(p);

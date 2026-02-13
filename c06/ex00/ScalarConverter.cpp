@@ -36,7 +36,6 @@ bool isDoubleLiteral(const std::string& s) {
     return dot;
 } 
 
-
 bool isFloatLiteral(const std::string& s) {
     if (s[s.length() - 1] != 'f')
         return false;
@@ -47,28 +46,21 @@ bool isFloatLiteral(const std::string& s) {
 
 LiteralType detectType(const std::string& rep) {
 
-    // CHAR: 'a'
-    if (rep.length() == 1 && isPrintable(rep[0]))
+    if (rep.length() == 1 && isPrintable(rep[0]))    // CHAR: 'a'
         return TYPE_CHAR;
-
-    // SPECIAL DOUBLE
-    if (rep == "nan" || rep == "+inf" || rep == "-inf")
+    if (rep == "nan" || rep == "+inf" || rep == "-inf")    // SPECIAL DOUBLE
         return TYPE_SPECIAL_DOUBLE;
 
-    // SPECIAL FLOAT
-    if (rep == "nanf" || rep == "+inff" || rep == "-inff")
+    if (rep == "nanf" || rep == "+inff" || rep == "-inff")    // SPECIAL FLOAT
         return TYPE_SPECIAL_FLOAT;
 
-    // INT
-    if (isIntLiteral(rep))
+    if (isIntLiteral(rep))    // INT
         return TYPE_INT;
 
-    // FLOAT
-    if (isFloatLiteral(rep))
+    if (isFloatLiteral(rep))    // FLOAT
         return TYPE_FLOAT;
 
-    // DOUBLE
-    if (isDoubleLiteral(rep))
+    if (isDoubleLiteral(rep))    // DOUBLE
         return TYPE_DOUBLE;
 
     return TYPE_INVALID;
@@ -115,9 +107,7 @@ LiteralType type = detectType(rep);
         std::cout << "double : "<< std::fixed <<std::setprecision(1) <<(x)<<std::endl;
 } 
 
-    ScalarConverter::ScalarConverter(){
-
-    }
+    ScalarConverter::ScalarConverter(){}
     ScalarConverter::ScalarConverter(ScalarConverter& other){
         (void)other;
     }
@@ -125,6 +115,4 @@ LiteralType type = detectType(rep);
         (void)other;
         return *this;
     }
-    ScalarConverter::~ScalarConverter(){
-        
-    }
+    ScalarConverter::~ScalarConverter(){}
