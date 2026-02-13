@@ -459,38 +459,63 @@
 
 
 
-class Base{
-    public:
-    std::string name = "10 sba7 pronto";
-    virtual void pri(){
-        std::cout <<"base class" <<std::endl;
-    }
-};
+// class Base{
+//     public:
+//     std::string name = "10 sba7 pronto";
+//     virtual void pri(){
+//         std::cout <<"base class" <<std::endl;
+//     }
+// };
 
-class deriva:public Base{
-    public:
-    void pri(){
-        std::cout <<"der class A" <<std::endl;
-    }
-};
-class derivb:public Base{
-    public:
-    void pri(){
-        std::cout <<"der class B" <<std::endl;
-    }
-};
+// class deriva:public Base{
+//     public:
+//     explicit deriva();
+//     void pri(){
+//         std::cout <<"der class A" <<std::endl;
+//     }
+// };
+// class derivb:public Base{
+//     public:
+//     void pri(){
+//         std::cout <<"der class B" <<std::endl;
+//     }
+// };
 
 
-int main  () 
-{
-    Base* a = new deriva;
+// int main  () 
+// {
+//     Base* a = new deriva;
 
-    // deriva* c = static_cast<deriva*>(a);
-    derivb* b = static_cast<derivb*>(a);
-    // derivb* b = dynamic_cast<derivb*>(a);
-    if (b)
-        b->pri();
-    else
-        std::cout << "Cast failed" << std::endl;
+//     derivb* b = static_cast<derivb*>(a);
+//     // deriva* c = static_cast<deriva*>(a);
+//     // derivb* b = dynamic_cast<derivb*>(a);
+//     if (b)
+//         b->pri();
+//     else
+//         std::cout << "Cast failed" << std::endl;
+// }
+
+// class A {
+
+// public:
+//     volatile int   x = 3;
+//     void  pr(){
+//        std::cout << x <<std::endl;
+//     }
+//     // A() {std::cout << x <<std::endl;}
+// };
+
+int main() {
+    // // A a1();      // ✅ OK (direct initialization)
+    // //  A a2 = 15;  // ❌ Error (implicit conversion not allowed)
+    // //  std::cout << a2.x << std::endl;
+    // //  a2.pr();
+    // A x;
+    // x.x = 4;
+    // x.pr();
+
+
+    int a = 76;
+    char *b = reinterpret_cast<char*>(&a);
+    std::cout << *b << std::endl;
 }
-
