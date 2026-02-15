@@ -505,17 +505,65 @@
 //     // A() {std::cout << x <<std::endl;}
 // };
 
-int main() {
-    // // A a1();      // ✅ OK (direct initialization)
-    // //  A a2 = 15;  // ❌ Error (implicit conversion not allowed)
-    // //  std::cout << a2.x << std::endl;
-    // //  a2.pr();
-    // A x;
-    // x.x = 4;
-    // x.pr();
+// int main() {
+//     // // A a1();      // ✅ OK (direct initialization)
+//     // //  A a2 = 15;  // ❌ Error (implicit conversion not allowed)
+//     // //  std::cout << a2.x << std::endl;
+//     // //  a2.pr();
+//     // A x;
+//     // x.x = 4;
+//     // x.pr();
 
 
-    int a = 76;
-    char *b = reinterpret_cast<char*>(&a);
-    std::cout << *b << std::endl;
+//     int a = 76;
+//     char *b = reinterpret_cast<char*>(&a);
+//     std::cout << *b << std::endl;
+
+// }
+
+// void conca(T a, R b ){
+//     std::cout << a+b<<std::endl; 
+// }
+
+// template <typename T>
+
+// T max(T a, T b){
+//     return (a > b) ? a:b; // generic behavior ;
+// }
+
+// int main (){
+//    std::cout << max(4,6) << std::endl;
+// }
+
+
+
+// class Box {
+//     public:
+//     T value;
+//     Box(T v):value(v){}
+//     T get()const {
+//         return value;
+//     }
+// };
+
+
+// int main  ()
+// {
+//    Box<int> a(10); 
+// }
+
+int sum (int a,int b)
+{
+    return (a+b);
+}
+
+void ftp(int(*xa)(int,int))
+{
+    std::cout << xa(5,4)<<std::endl;
+
+}
+int main ()
+{
+    ftp(sum);
+
 }

@@ -1,5 +1,5 @@
-NAME = convert
-SRCS = ScalarConverter.cpp main.cpp
+NAME = iter
+SRCS =  main.cpp
 OBJS = $(SRCS:.cpp=.o)
 CXX= c++ -Wall -Werror -Wextra -std=c++98
 RM = rm -rf
