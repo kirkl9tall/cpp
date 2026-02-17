@@ -1,23 +1,6 @@
 #include  "temps.hpp"
 
-template<typename T>
 
-void  swap(T &a ,T &b)
-{
-    T c = a;
-    a = b;
-    b = c;
-}
-template<typename T>
-
-T max(T a, T b){
-    return (a > b) ? a:b; 
-}
-template<typename T>
-
-T min(T a, T b){
-    return (a < b) ? a:b; 
-}
 
 int main( void ) {
     int a = 2;
@@ -34,3 +17,5 @@ int main( void ) {
     std::cout << "max( c, d ) = " << ::max( c, d ) << std::endl;
 return 0;
 }
+
+

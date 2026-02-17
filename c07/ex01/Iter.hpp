@@ -9,11 +9,11 @@ void funptr(const T element)
 }
 
 
-template<typename T,typename R>
-void Iter(T*adrss , const int length, R funptr){
+template<typename T>
+void Iter(T* array , const int length, void (*f)(T)){
 
     for (int x = 0; x < length ;x++)
-        funptr(adress[x]);
+        f(array[x]);
 }
 
 
