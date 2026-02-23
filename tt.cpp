@@ -1,4 +1,3 @@
-#include <iostream>
 #include <cstdint>
 
 // class Animal{
@@ -277,9 +276,10 @@
 //     a = b;
 
 // }
-
+#include <iostream>
 #include <string>
 #include <exception>
+#include  <algorithm>
 
 
 
@@ -552,18 +552,50 @@
 //    Box<int> a(10); 
 // }
 
-int sum (int a,int b)
-{
-    return (a+b);
-}
+// int sum (int a,int b)
+// {
+//     return (a+b);
+// }
 
-void ftp(int(*xa)(int,int))
-{
-    std::cout << xa(5,4)<<std::endl;
+// void ftp(int(*xa)(int,int))
+// {
+//     std::cout << xa(5,4)<<std::endl;
 
-}
+// }
+// int main ()
+// {
+//     ftp(sum);
+
+// }
+
+
+
+
+
+// this module 08 is not just about doint it it's about to  understand three pillar STL
+//  templates :  for generic progrming 
+// instead of writing   : int findInVector(std::vector<int> v, int value);
+// you write    : template <typename T>
+//                  T something(T param); 
+#include <vector>
+#include  <map>
+
 int main ()
 {
-    ftp(sum);
+
+    std::vector<int> v;
+
+    v.push_back(1);
+    v.push_back(4);
+    v.push_back(56);
+    v.push_back(154);
+    v.push_back(14);
+    v.push_back(154);
+
+    for (std::vector<int>::iterator it = v.begin(); it != v.end(); ++it)
+    {
+        std::cout << *it << std::endl;
+    }
+
 
 }
