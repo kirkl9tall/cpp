@@ -592,10 +592,11 @@ int main ()
     v.push_back(14);
     v.push_back(154);
 
-    for (std::vector<int>::iterator it = v.begin(); it != v.end(); ++it)
-    {
-        std::cout << *it << std::endl;
-    }
+    // for (std::vector<int>::iterator it = v.begin(); it != v.end(); ++it)
+    // {
+    //     std::cout << *it << std::endl;
+    // }
+    std::cout << v.size();
 
 
 }

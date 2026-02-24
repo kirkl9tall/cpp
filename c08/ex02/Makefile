@@ -1,5 +1,5 @@
-NAME = Span
-SRCS =  Span.cpp main.cpp
+NAME = Mutated 
+SRCS = main.cpp
 OBJS = $(SRCS:.cpp=.o)
 CXX= c++ -Wall -Werror -Wextra -std=c++98
 RM = rm -rf
