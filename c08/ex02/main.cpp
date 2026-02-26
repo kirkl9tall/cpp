@@ -2,7 +2,7 @@
 
 int main ()
 {
-    MutantStack mstack;
+    MutantStack<int> mstack;
     mstack.push(5);
     mstack.push(17);
     std::cout << mstack.top() << std::endl;
@@ -12,8 +12,8 @@ int main ()
     mstack.push(5);
     mstack.push(737);
     mstack.push(0);
-    MutantStack::iterator it = mstack.begin();
-    MutantStack::iterator ite = mstack.end();
+    MutantStack<int>::iterator it = mstack.begin();
+    MutantStack<int>::iterator ite = mstack.end();
     ++it;
     --it;
     while (it != ite)

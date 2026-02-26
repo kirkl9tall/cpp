@@ -4,19 +4,19 @@
 #include <algorithm>
 #include <stdexcept>
 #include <stack>
-
-class MutantStack : public std::stack<int>
+template <typename T>
+class MutantStack : public std::stack<T>
 {
     public:
     MutantStack(){};
     ~MutantStack(){};
-    MutantStack(const MutantStack& other) : std::stack<int>(other) {};
+    MutantStack(const MutantStack& other) : std::stack<T>(other) {};
     
     MutantStack& operator=(const MutantStack& other) {
-        std::stack<int>::operator=(other);
+        std::stack<T>::operator=(other);
         return *this;
     }
-    typedef typename std::stack<int>::container_type::iterator iterator;
-    iterator begin() { return std::stack<int>::c.begin(); }
-    iterator end() { return std::stack<int>::c.end(); }
+    typedef typename std::stack<T>::container_type::iterator iterator;
+    iterator begin() { return std::stack<T>::c.begin(); }
+    iterator end() { return std::stack<T>::c.end(); }
 };

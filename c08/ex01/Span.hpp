@@ -16,6 +16,15 @@ class Span{
     Span& operator=(const Span& other);
 
     void addNumber (int  value);
+    template <typename T>
+    void addNumbers (T container){
+        typename T::iterator it = container.begin();
+        while (it != container.end())
+        {
+            addNumber(*it);
+            ++it;
+        }
+    }
     int shortestSpan() const;
     int longestSpan() const;
     ~Span();

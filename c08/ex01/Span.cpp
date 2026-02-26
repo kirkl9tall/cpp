@@ -6,7 +6,6 @@ void Span::addNumber (int  value){
     container.push_back(value);
 }
 
-
 int Span::shortestSpan() const{
     if (container.size() < 2)
         throw std::logic_error("Not enough elements to compute span");
@@ -43,4 +42,9 @@ Span& Span::operator=(const Span& other){
     N = other.N;
     container = other.container;
     return *this; 
+}
+
+
+Span::~Span(){
+    
 }

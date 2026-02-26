@@ -580,23 +580,32 @@
 #include <vector>
 #include  <map>
 
-int main ()
-{
+// int main ()
+// {
 
-    std::vector<int> v;
+//     std::vector<int> v;
 
-    v.push_back(1);
-    v.push_back(4);
-    v.push_back(56);
-    v.push_back(154);
-    v.push_back(14);
-    v.push_back(154);
+//     v.push_back(1);
+//     v.push_back(4);
+//     v.push_back(56);
+//     v.push_back(154);
+//     v.push_back(14);
+//     v.push_back(154);
 
-    // for (std::vector<int>::iterator it = v.begin(); it != v.end(); ++it)
-    // {
-    //     std::cout << *it << std::endl;
-    // }
-    std::cout << v.size();
+//     // for (std::vector<int>::iterator it = v.begin(); it != v.end(); ++it)
+//     // {
+//     //     std::cout << *it << std::endl;
+//     // }
+//     std::cout << v.size();
 
+// }
 
+template <typename T>
+void func(T container) {
+     typename T::iterator it;
+}
+
+int main  (){
+
+     std::string a;
 }
