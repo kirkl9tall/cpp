@@ -4,7 +4,6 @@
 #include <stdexcept>
 
 template <typename T>
-
 class Array
 {
 private:
