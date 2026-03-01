@@ -606,36 +606,44 @@
 // }
 
 // int main  (){
-
 //      std::string a;
 // }
 
+// int main ()
+// {
+//      std::map<int , char> m = {
+//           {1, 'a'}, 
+//           {2, 'b'}, 
+//           {3, 'c'}
+//      };
+//      std::map<int , char> m2 = {
+//           {1, 'z'}, 
+//           {2, 'x'}, 
+//           {3, 'y'}
+//      };
+//      std::map<std::map<int,char>,int> json  = {
+//           {
+//                m,1
+//           },         
+//           {
+//                m2,2
+//           }
+//      };
+//      std::map<std::map<int,char>,int>::iterator it =  json.begin();
+//      std::cout << it->first.at(2) << std::endl;
+// }
 
-int main ()
+#include <fstream>
+
+int main (int arv,char *argv[])
 {
-     std::map<int , char> m = {
-          {1, 'a'}, 
-          {2, 'b'}, 
-          {3, 'c'}
-     };
+     std::fstream infil;
+     std::string  buff;
 
-     std::map<int , char> m2 = {
-          {1, 'z'}, 
-          {2, 'x'}, 
-          {3, 'y'}
-     };
-     std::map<std::map<int,char>,int> json  = {
-          {
-               m,1
-          },         
-          {
-               m2,2
-          }
-     };
+     infil.open("data.csv");
 
-
-     std::map<std::map<int,char>,int>::iterator it =  json.begin();
-     std::cout << it->first.at(2) << std::endl;
-   
-
+     while (std::getline(infil,buff))
+     {
+          std::cout << buff<<std::endl;
+     }
 }
