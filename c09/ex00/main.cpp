@@ -26,19 +26,16 @@ int main (int argc,char *argv[])
             std::cerr << "Error: could not open file." << std::endl;
             return 1;
         }
-
         std::getline(infil,buff);
         if (buff != "date,exchange_rate")
         {
             std::cout << "format not valid "<<std::endl;
             return -1;
         }
-
         std::map<std::string,float> csv_file;
         std::string line;
         std::string key; 
         float val;
-
         while (std::getline(infil,line))
         {
             std::stringstream ss(line);
@@ -61,9 +58,9 @@ int main (int argc,char *argv[])
             return -1;
         }
         std::map<std::string,float> inp;
+        char check_two;
         while (std::getline(input,line))
         {
-
             std::stringstream ss(line);
             if (!std::getline(ss, key, '|'))
                 continue;
@@ -73,6 +70,11 @@ int main (int argc,char *argv[])
             {
                 std::cerr << "Error: bad input" << line << std::endl;
                 continue;
+            }
+            else if (ss >>check_two)
+            {
+                std::cerr << "Error: bad input" << line << std::endl;
+                continue; 
             }
             else if  ( val < 0)
             {
@@ -84,10 +86,8 @@ int main (int argc,char *argv[])
                 std::cerr << "Error: bigger than 1000 " << line << std::endl;
                 continue;
             }
-
             std::map<std::string,float>::iterator it;
             it = csv_file.lower_bound(key);
-
             if (it != csv_file.end() && it->first == key)
             {
                 std::cout << key << " => " << val << " = " << it->second * val << std::endl;
@@ -100,7 +100,7 @@ int main (int argc,char *argv[])
                     continue;
                 }
                 --it;
-                std::cout << it->second * val << std::endl;
+                std::cout << key << " => " << val << " = " << it->second * val << std::endl;
             }
         }
     }
