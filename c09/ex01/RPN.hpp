@@ -3,15 +3,7 @@
 #include <algorithm>
 #include <iostream>
 #include <fstream>
-#include <map>
+#include <stack>
 #include <string>
 #include <cctype>
 #include <sstream>
-
-int btc_ex(char ** argv);
-std::string trim(const std::string &str);
-
-
-
-
-
