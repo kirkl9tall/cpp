@@ -21,7 +21,12 @@ int main (int argc,char *argv[])
         std::string  buff;
         
         infil.open("pl.csv");
-        
+        if (!infil.is_open())
+        {
+            std::cerr << "Error: could not open file." << std::endl;
+            return 1;
+        }
+
         std::getline(infil,buff);
         if (buff != "date,exchange_rate")
         {
@@ -41,11 +46,14 @@ int main (int argc,char *argv[])
             ss >> val;
             csv_file[key] = val;
         }
-
         std::fstream input;
         std::string buff_2;
         input.open(argv[1]);
-
+        if (!input.is_open())
+        {
+            std::cout << "Error: could not open file."<<std::endl;
+            return 1;
+        }
         std::getline (input,buff_2);
 
         if  (buff_2 != "date | value"){
@@ -61,7 +69,7 @@ int main (int argc,char *argv[])
                 continue;
             key = trim(key);
             // checking value --(--------------- negative  more than  1000  lenght  dyal date 
-            if (!(ss >> val) || ( key.length() != 10 || key[4] != '-' || key[7] != '-'))
+            if (!(ss >> val) || ( key.length() != 10 /*|| key[4] != '-' || key[7] != '-'*/))
             {
                 std::cerr << "Error: bad input" << line << std::endl;
                 continue;
@@ -82,7 +90,7 @@ int main (int argc,char *argv[])
 
             if (it != csv_file.end() && it->first == key)
             {
-                std::cout << it->second * val << std::endl;
+                std::cout << key << " => " << val << " = " << it->second * val << std::endl;
             }
             else
             {
@@ -95,7 +103,6 @@ int main (int argc,char *argv[])
                 std::cout << it->second * val << std::endl;
             }
         }
-
     }
     else
         std::cout << "invalid  args !" << std::endl;
