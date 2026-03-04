@@ -635,15 +635,28 @@
 
 #include <fstream>
 
-int main (int arv,char *argv[])
+// int main (int arv,char *argv[])
+// {
+//      std::fstream infil;
+//      std::string  buff;
+
+//      infil.open("data.csv");
+
+//      while (std::getline(infil,buff))
+//      {
+//           std::cout << buff<<std::endl;
+//      }
+// }
+
+
+
+int main  ()
 {
-     std::fstream infil;
-     std::string  buff;
+     std::string str = "1";
 
-     infil.open("data.csv");
+     int a  = str[0] -48;
 
-     while (std::getline(infil,buff))
-     {
-          std::cout << buff<<std::endl;
-     }
+     std::cout << a << std::endl;
+
+
 }
