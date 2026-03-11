@@ -5,6 +5,45 @@
 // {
 
 // }
+std::vector<size_t> jacobsthalOrder(size_t n)
+{
+    std::vector<size_t> order;
+
+    if (n == 0)
+        return order;
+
+    order.push_back(0); // first pend already inserted
+
+    if (n == 1)
+        return order;
+
+    order.push_back(1);
+
+    // generate Jacobsthal numbers
+    std::vector<size_t> jacob;
+    jacob.push_back(0);
+    jacob.push_back(1);
+
+    while (jacob.back() < n)
+        jacob.push_back(jacob[jacob.size()-1] + 2 * jacob[jacob.size()-2]);
+
+    size_t prev = 1;
+
+    for (size_t i = 3; i < jacob.size(); i++)
+    {
+        size_t curr = jacob[i];
+
+        if (curr > n)
+            curr = n;
+
+        for (size_t j = curr; j > prev; j--)
+            order.push_back(j);
+
+        prev = jacob[i];
+    }
+
+    return order;
+}
 
 std::vector<int> fun1(std::vector<int> &container)
 {
@@ -30,8 +69,6 @@ std::vector<int> fun1(std::vector<int> &container)
     new_main_ch = fun1(main_ch);
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     std::vector <int > new_pend;
-    
-    // std::vector<int>::iterator it = main_ch.begin();
     for (size_t i = 0 ; i < new_main_ch.size(); i++)
     {   
         size_t j = 0;
@@ -50,17 +87,24 @@ std::vector<int> fun1(std::vector<int> &container)
     //////////////////////////  jacobsthal numbers ////////////////////////////
     result.insert(result.begin(),new_pend[0]);
     ////// test /////
-    for (size_t i = 1; i < new_pend.size(); ++i)
+
+    std::vector<size_t> order = jacobsthalOrder(new_pend.size());
+
+    for (size_t k = 1; k < order.size(); ++k)
     {
+        size_t i = order[k];
+        
+        if (i >= new_pend.size())
+            continue;
+        
         int value = new_pend[i];
         int winner = new_main_ch[i];
-
-        // find position of winner in result
+        // find position of winner in result ///////
         size_t pos = 0;
         while (pos < result.size() && result[pos] != winner)
             pos++;
 
-        // binary search in range [0 … pos]
+        // binary search in range /////
         size_t left = 0;
         size_t right = pos;
 
@@ -76,7 +120,7 @@ std::vector<int> fun1(std::vector<int> &container)
 
         result.insert(result.begin() + left, value);
     }
-    //// after the loop 
+    //// after the loop  //// // / 
     if (pend.size() > new_pend.size())
     {
         int value = pend.back();
@@ -93,16 +137,8 @@ std::vector<int> fun1(std::vector<int> &container)
             else
                 left = mid + 1;
         }
-
         result.insert(result.begin() + left, value);
     }
-
-     // 1-  create a vector that containes the indexes  what to  insert first /////
-     // 2- function  that give you the  vector  that  have indexes of the  jacobs number ;
-
-    // 3 -  binary insertion sort 
-
-
     return result;
 }
 
