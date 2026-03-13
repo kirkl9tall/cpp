@@ -1,110 +1,124 @@
 #include "PmergeMe.hpp"
 
+int parseInt(const char* str)
+{
+    char* end;
+    long value = std::strtol(str, &end, 10);
 
-// int  binary_insertion_sort (std::vector<int> &container)
-// {
+    if (*end != '\0')
+        throw std::runtime_error("Error");
 
-// }
-std::vector<size_t> jacobsthalOrder(size_t n)
+    if (value < 0 || value > std::numeric_limits<int>::max())
+        throw std::runtime_error("Error");
+
+    return static_cast<int>(value);
+}
+
+std::vector<size_t> buildOrder(size_t n)
 {
     std::vector<size_t> order;
 
     if (n == 0)
         return order;
 
-    order.push_back(0); // first pend already inserted
+    order.push_back(0);
 
-    if (n == 1)
-        return order;
+    size_t j0 = 0;
+    size_t j1 = 1;
+    std::vector<size_t> jac;
 
-    order.push_back(1);
-
-    // generate Jacobsthal numbers
-    std::vector<size_t> jacob;
-    jacob.push_back(0);
-    jacob.push_back(1);
-
-    while (jacob.back() < n)
-        jacob.push_back(jacob[jacob.size()-1] + 2 * jacob[jacob.size()-2]);
+    while (j1 < n)
+    {
+        jac.push_back(j1);
+        size_t next = j1 + 2 * j0;
+        j0 = j1;
+        j1 = next;
+    }
 
     size_t prev = 1;
 
-    for (size_t i = 3; i < jacob.size(); i++)
+    for (size_t k = 1; k < jac.size(); ++k)
     {
-        size_t curr = jacob[i];
-
-        if (curr > n)
-            curr = n;
-
-        for (size_t j = curr; j > prev; j--)
-            order.push_back(j);
-
-        prev = jacob[i];
+        for (int i = static_cast<int>(jac[k]) - 1;
+             i >= static_cast<int>(prev);
+             --i)
+        {
+            order.push_back(i);
+        }
+        prev = jac[k];
     }
+
+    for (size_t i = prev; i < n; ++i)
+        order.push_back(i);
 
     return order;
 }
 
-std::vector<int> fun1(std::vector<int> &container)
+std::deque<int> fun1_deque(std::deque<int> &container)
 {
-    if (container.size()<= 1)
+    if (container.size() <= 1)
         return container;
-    
+
     size_t i = 0;
-    std::vector<int> main_ch;
-    std::vector<int> pend;
+    std::deque<int> main_ch;
+    std::deque<std::pair<int,int> > pairs;
 
-    while(i < container.size())
+    bool hasStraggler = false;
+    int straggler = 0;
+
+    while (i < container.size())
     {
-        if (i+1 < container.size())
+        if (i + 1 < container.size())
         {
-            main_ch.push_back(container[i+1] < container[i] ? container[i] : container[i+1]);
-            pend.push_back(container[i+1] < container[i] ? container[i+1] : container[i]);
+            int a = container[i];
+            int b = container[i+1];
+
+            if (a < b)
+                pairs.push_back(std::make_pair(a, b));
+            else
+                pairs.push_back(std::make_pair(b, a));
         }
-        else 
-            pend.push_back(container[i]);
-        i +=2; 
-    }
-    std::vector<int> new_main_ch;
-    new_main_ch = fun1(main_ch);
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    std::vector <int > new_pend;
-    for (size_t i = 0 ; i < new_main_ch.size(); i++)
-    {   
-        size_t j = 0;
-        for (; j < main_ch.size();j++)
+        else
         {
-            if ( new_main_ch[i]== main_ch[j])
-                break;
+            hasStraggler = true;
+            straggler = container[i];
         }
-        new_pend.push_back(pend[j]);
+        i += 2;
     }
-    if (new_pend.size() < pend.size())
-        new_pend.push_back(pend[pend.size()-1]);
 
-    std::vector<int> result;
-    result = new_main_ch;
-    //////////////////////////  jacobsthal numbers ////////////////////////////
-    result.insert(result.begin(),new_pend[0]);
-    ////// test /////
+    for (size_t i = 0; i < pairs.size(); i++)
+        main_ch.push_back(pairs[i].second);
 
-    std::vector<size_t> order = jacobsthalOrder(new_pend.size());
+    main_ch = fun1_deque(main_ch);
+
+    std::map<int,std::pair<int,int> > pairMap;
+    
+    for (size_t i = 0; i < pairs.size(); ++i)
+        pairMap[pairs[i].second] = pairs[i];
+
+    std::deque<std::pair<int,int> > ordered_pairs;
+    for (size_t i = 0; i < main_ch.size(); ++i)
+        ordered_pairs.push_back(pairMap[main_ch[i]]);
+
+    std::deque<int> result;
+
+    for (size_t i = 0; i < ordered_pairs.size(); ++i)
+        result.push_back(ordered_pairs[i].second);
+
+    result.insert(result.begin(), ordered_pairs[0].first);
+
+    std::vector<size_t> order = buildOrder(ordered_pairs.size());
 
     for (size_t k = 1; k < order.size(); ++k)
     {
-        size_t i = order[k];
-        
-        if (i >= new_pend.size())
-            continue;
-        
-        int value = new_pend[i];
-        int winner = new_main_ch[i];
-        // find position of winner in result ///////
-        size_t pos = 0;
-        while (pos < result.size() && result[pos] != winner)
-            pos++;
+        size_t idx = order[k];
+        int value = ordered_pairs[idx].first;
+        int winner = ordered_pairs[idx].second;
 
-        // binary search in range /////
+        size_t pos =
+            std::lower_bound(result.begin(), result.end(), winner)
+            - result.begin();
+
         size_t left = 0;
         size_t right = pos;
 
@@ -120,13 +134,94 @@ std::vector<int> fun1(std::vector<int> &container)
 
         result.insert(result.begin() + left, value);
     }
-    //// after the loop  //// // / 
-    if (pend.size() > new_pend.size())
-    {
-        int value = pend.back();
 
+    if (hasStraggler)
+    {
         size_t left = 0;
         size_t right = result.size();
+
+        while (left < right)
+        {
+            size_t mid = (left + right) / 2;
+
+            if (straggler < result[mid])
+                right = mid;
+            else
+                left = mid + 1;
+        }
+
+        result.insert(result.begin() + left, straggler);
+    }
+
+    return result;
+}
+
+std::vector<int> fun1(std::vector<int> &container)
+{
+    if (container.size() <= 1)
+        return container;
+
+    size_t i = 0;
+    std::vector<int> main_ch;
+    std::vector<std::pair<int,int> > pairs;
+
+    bool hasStraggler = false;
+    int straggler = 0;
+
+    while (i < container.size())
+    {
+        if (i + 1 < container.size())
+        {
+            int a = container[i];
+            int b = container[i+1];
+
+            if (a < b)
+                pairs.push_back(std::make_pair(a, b));
+            else
+                pairs.push_back(std::make_pair(b, a));
+        }
+        else
+        {
+            hasStraggler = true;
+            straggler = container[i];
+        }
+        i += 2;
+    }
+
+    for (size_t i = 0; i < pairs.size(); i++)
+        main_ch.push_back(pairs[i].second);
+
+    main_ch = fun1(main_ch);
+
+    std::map<int, std::pair<int,int> > pairMap;
+    for (size_t i = 0; i < pairs.size(); ++i)
+        pairMap[pairs[i].second] = pairs[i];
+
+    std::vector<std::pair<int,int> > ordered_pairs;
+    for (size_t i = 0; i < main_ch.size(); ++i)
+        ordered_pairs.push_back(pairMap[main_ch[i]]);
+
+    std::vector<int> result;
+
+    for (size_t i = 0; i < ordered_pairs.size(); ++i)
+        result.push_back(ordered_pairs[i].second);
+
+    result.insert(result.begin(), ordered_pairs[0].first);
+
+    std::vector<size_t> order = buildOrder(ordered_pairs.size());
+
+    for (size_t k = 1; k < order.size(); ++k)
+    {
+        size_t idx = order[k];
+        int value = ordered_pairs[idx].first;
+        int winner = ordered_pairs[idx].second;
+
+        size_t pos =
+            std::lower_bound(result.begin(), result.end(), winner)
+            - result.begin();
+
+        size_t left = 0;
+        size_t right = pos;
 
         while (left < right)
         {
@@ -137,109 +232,102 @@ std::vector<int> fun1(std::vector<int> &container)
             else
                 left = mid + 1;
         }
+
         result.insert(result.begin() + left, value);
     }
+
+    if (hasStraggler)
+    {
+        size_t left = 0;
+        size_t right = result.size();
+
+        while (left < right)
+        {
+            size_t mid = (left + right) / 2;
+
+            if (straggler < result[mid])
+                right = mid;
+            else
+                left = mid + 1;
+        }
+
+        result.insert(result.begin() + left, straggler);
+    }
+
     return result;
 }
 
-int main (int argc, char *argv[])
+int main(int argc, char *argv[])
 {
-    if (argc > 1)
-    {   
-        std::vector<int> cont;
-        std::vector<int> cont1;
+    if (argc <= 1)
+    {
+        std::cout << "Error" << std::endl;
+        return 1;
+    }
 
-        char **end = NULL;
+    std::vector<int> cont;
+
+    try
+    {
         int i = 1;
         while (argv[i])
         {
-            cont.push_back(strtod(argv[i],end));
+            cont.push_back(parseInt(argv[i]));
             i++;
         }
-        // vector parsed  we have a ready to use vector 
-        cont1 = fun1(cont);
-        // std::cout  << " last swap "<<  cont1[0] << " | " << cont1[1] << std::endl;
-        std::vector<int>::iterator it  =  cont1.begin();
-        for (;it != cont1.end();++it)
-            std::cout << *it << " ";
     }
-    else
-        std::cout << "error !" << std::endl;
+    catch (...)
+    {
+        std::cout << "Error" << std::endl;
+        return 1;
+    }
+
+    std::vector<int> check = cont;
+    std::sort(check.begin(), check.end());
+
+    for (size_t i = 1; i < check.size(); ++i)
+    {
+        if (check[i] == check[i - 1])
+        {
+            std::cout << "Error" << std::endl;
+            return 1;
+        }
+    }
+
+    std::vector<int> vec(cont.begin(), cont.end());
+    std::deque<int> deq(cont.begin(), cont.end());
+
+    std::cout << "Before: ";
+    for (size_t i = 0; i < vec.size(); ++i)
+        std::cout << vec[i] << " ";
     std::cout << std::endl;
+
+    clock_t start = clock();
+    std::vector<int> vec_result = fun1(vec);
+    clock_t end = clock();
+    double vec_time =
+        double(end - start) / CLOCKS_PER_SEC * 1000000;
+
+    start = clock();
+    std::deque<int> deq_result = fun1_deque(deq);
+    end = clock();
+    double deq_time =
+        double(end - start) / CLOCKS_PER_SEC * 1000000;
+
+    std::cout << "After:  ";
+    for (size_t i = 0; i < vec_result.size(); ++i)
+        std::cout << vec_result[i] << " ";
+    std::cout << std::endl;
+
+    std::cout << "Time to process a range of "
+              << vec.size()
+              << " elements with std::vector : "
+              << vec_time << " us" << std::endl;
+
+    std::cout << "Time to process a range of "
+              << deq.size()
+              << " elements with std::deque  : "
+              << deq_time << " us" << std::endl;
+
+    return 0;
 }
-
-
-
-// Yes — but that answer is too vague for a defense.
-
-// You need a precise reason.
-
-// Here is the exact explanation you should understand:
-
-// When you insert sequentially:
-
-// a1, a2, a3, a4, ...
-
-// The size of the search window grows irregularly.
-
-// Example of window sizes (roughly):
-
-// 1
-// 2
-// 3
-// 4
-// 5
-// ...
-
-// Binary search comparisons for those sizes are:
-
-// 0
-// 1
-// 2
-// 2
-// 3
-// 3
-// 3
-// ...
-
-// So some insertions use more comparisons than necessary.
-
-// Ford–Johnson tries to control the insertion order so that:
-
-// Each insertion happens in a window of size:
-
-// 2^k − 1
-
-// Examples:
-
-// 1
-// 3
-// 7
-// 15
-// 31
-// ...
-
-// Why?
-
-// Because binary search on:
-
-// 2^k − 1 elements
-
-// always takes exactly:
-
-// k comparisons
-
-// No wasted comparison.
-
-// Sequential insertion does not guarantee that.
-
-// That is the real reason.
-
-// So the correct defense answer is:
-
-// Sequential insertion creates suboptimal search window sizes, which increases worst-case comparisons.
-// Ford–Johnson uses Jacobsthal ordering to keep insertion windows close to 2^k − 1, minimizing comparisons.
-
-// That is precise.
-
-// Now we move carefully to Jacobsthal.
